@@ -1,5 +1,9 @@
 'use strict'
 
-export function sayHi () {
-  console.log('Hi!')
+export function extractArgs (a, fromPos = 0) {
+  const args = []
+  for (let i = fromPos; i < a.length; i++) {
+    args[i - fromPos] = a[i]
+  }
+  return args
 }
