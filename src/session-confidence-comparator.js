@@ -41,7 +41,7 @@ export default class SessionConfidenceComparor {
 
   getDialog () {
     const cur = this.session.sessionState.callstack[this.index]
-    this.dialogData = cur.state;
-    return this.session.dialogs.getDialog(cur.id);
+    this.dialogData = cur.state
+    return this.session.dialogs.getDialog(cur.id)``
   }
 }
