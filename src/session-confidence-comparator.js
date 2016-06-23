@@ -4,7 +4,7 @@ import Dialog from './dialog/dialog'
 import Session from './session'
 import { extractArgs } from './utils'
 
-export default class SessionConfidenceComparor {
+export default class SessionConfidenceComparator {
   SessionConfidenceComparor (session, language, utterance, score, callback) {
     this.session = session
     this.language = language
