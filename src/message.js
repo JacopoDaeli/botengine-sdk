@@ -1,7 +1,7 @@
 'use strict'
 
 import Session from './session'
-import { extractArgs, composePrompt } from './utils'
+import { extractArgs, randomPrompt, composePrompt } from './utils'
 
 export default class Message {
   setLanguage (lang) {
@@ -11,7 +11,7 @@ export default class Message {
 
   setText (ses, prompts) {
     const args = extractArgs(arguments, 2)
-    const msg = typeof prompts === 'string' ? prompts : Message.randomPrompt(prompts)
+    const msg = typeof prompts === 'string' ? prompts : randomPrompt(prompts)
     args.unshift(msg)
     this.text = Session.prototype.getText.apply(ses, args)
     return this
