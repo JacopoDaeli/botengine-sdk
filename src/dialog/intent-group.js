@@ -1,6 +1,6 @@
 'use strict'
 
-import actions from './DialogAction'
+import actions from './dialog-action'
 
 export default class IntentGroup {
   constructor (id) {

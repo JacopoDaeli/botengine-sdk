@@ -1,8 +1,8 @@
 'use strict'
 
 import sprintf from 'sprintf-js'
-import Dialog from './Dialog'
-import consts from '../constants'
+import Dialog from './dialog/dialog'
+import consts from './constants'
 
 export function extractArgs (a, fromPos = 0) {
   const args = []

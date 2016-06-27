@@ -1,9 +1,9 @@
 'use strict'
 
 import _ from 'lodash'
-import Session from '../Session'
-import Dialog from './Dialog'
-import SimpleDialog from './SimpleDialog'
+import Session from '../session'
+import Dialog from './dialog'
+import SimpleDialog from './simple-dialog'
 import consts from '../constants'
 import { extractArgs } from '../utils'
 
