@@ -25,7 +25,7 @@ export default class Session extends EventEmitter {
   dispatch (sessionState, message) {
     let index = 0
     let handlers = null
-    var next = () => {
+    const next = () => {
       const handler = index < handlers.length ? handlers[index] : null
       if (handler) {
         index++
@@ -106,7 +106,7 @@ export default class Session extends EventEmitter {
     if (ss.callstack.length > 0) {
       ss.callstack[ss.callstack.length - 1].state = this.dialogData || {}
     }
-    var cur = {
+    const cur = {
       id: id,
       state: {}
     }
@@ -121,8 +121,8 @@ export default class Session extends EventEmitter {
     if (!dialog) {
       throw new Error(`Dialog[${id}] not found.`)
     }
-    var ss = this.sessionState
-    var cur = {
+    const ss = this.sessionState
+    const cur = {
       id: id,
       state: {}
     }
@@ -141,7 +141,7 @@ export default class Session extends EventEmitter {
       return this
     }
     let m = null
-    var r = {}
+    let r = {}
     if (result) {
       if (typeof result === 'string') {
         m = this.createMessage(result, args)
@@ -239,7 +239,7 @@ export default class Session extends EventEmitter {
 
   validateCallstack () {
     const ss = this.sessionState
-    for (var i = 0; i < ss.callstack.length; i++) {
+    for (let i = 0; i < ss.callstack.length; i++) {
       const id = ss.callstack[i].id
       if (!this.dialogs.hasDialog(id)) {
         return false
