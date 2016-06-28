@@ -12,7 +12,7 @@ class TextBot extends DialogCollection {
     this.options = options || {
       maxSessionAge: 14400000,
       defaultDialogId: '/',
-      minSendDelay: 1000
+      minSendDelay: 10
     }
     this.configure(this.options)
   }
