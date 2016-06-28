@@ -19,11 +19,7 @@ helloBot.add('/', [
 
 helloBot.add('/profile', [
   function (session) {
-    if (session.userData.name) {
-      builder.Prompt.text(session, 'What would you like to change it to?')
-    } else {
-      builder.Prompt.text(session, 'Hi! What is your name?')
-    }
+    builder.Prompt.text(session, 'Hi! What is your name?')
   },
   function (session, results) {
     session.userData.name = results.response
