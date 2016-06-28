@@ -13,6 +13,6 @@ export function preferButtons (session, choiceCnt, rePrompt) {
 }
 
 export function getChannelId (session) {
-  var account = session.message.from || session.message.to
+  const account = session.message.from || session.message.to
   return account.channelId.toLowerCase()
 }

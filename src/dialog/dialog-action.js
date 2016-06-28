@@ -27,7 +27,7 @@ const dialogAction = {
       } else {
         if (args) {
           a = a || {}
-          for (var key in args) {
+          for (let key in args) {
             if (args.hasOwnProperty(key)) {
               a[key] = args[key]
             }

@@ -19,7 +19,7 @@ class TextBot extends DialogCollection {
 
   configure (options) {
     if (options) {
-      for (var key in options) {
+      for (let key in options) {
         if (options.hasOwnProperty(key)) {
           this.options[key] = options[key]
         }
