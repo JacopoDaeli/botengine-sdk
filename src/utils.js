@@ -80,3 +80,7 @@ export function waterfall (steps) {
     }
   }
 }
+
+export function beginPrompt (session, args) {
+  session.beginDialog(consts.DialogId.Prompts, args)
+}
