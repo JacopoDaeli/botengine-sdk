@@ -9,7 +9,7 @@ import prompts from './dialogs/prompts'
 import intent from './dialogs/intent-dialog'
 import CommandDialog from './dialogs/command-dialog'
 import SimpleDialog from './dialogs/simple-dialog'
-import EntityRecognizer from './dialogs/entity-recognizer'
+import entityRecognizer from './dialogs/entity-recognizer'
 import MemoryStorage from './storage/memory-storage'
 import TextBot from './bots/text-bot'
 
@@ -30,7 +30,7 @@ exports.IntentGroup = intent.IntentGroup
 
 exports.CommandDialog = CommandDialog
 exports.SimpleDialog = SimpleDialog
-exports.EntityRecognizer = EntityRecognizer
+exports.entityRecognizer = entityRecognizer
 exports.MemoryStorage = MemoryStorage
 
 exports.TextBot = TextBot

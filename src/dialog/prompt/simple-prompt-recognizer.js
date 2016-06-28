@@ -2,7 +2,7 @@
 
 import promptType from './prompt-type'
 import Dialog from '../dialog'
-import EntityRecognizer from '../entity-recognizer'
+import entityRecognizer from '../entity-recognizer'
 
 export default class SimplePromptRecognizer {
   constructor () {
@@ -22,16 +22,16 @@ export default class SimplePromptRecognizer {
             response = text
             break
           case promptType.number:
-            const n = EntityRecognizer.parseNumber(text)
+            const n = entityRecognizer.parseNumber(text)
             if (!isNaN(n)) {
               score = n.toString().length / text.length
               response = n
             }
             break
           case promptType.confirm:
-            let b = EntityRecognizer.parseBoolean(text)
+            let b = entityRecognizer.parseBoolean(text)
             if (typeof b !== 'boolean') {
-              const n = EntityRecognizer.parseNumber(text)
+              const n = entityRecognizer.parseNumber(text)
               if (!isNaN(n) && n > 0 && n <= 2) {
                 b = (n === 1)
               }
@@ -42,16 +42,16 @@ export default class SimplePromptRecognizer {
             }
             break
           case promptType.time:
-            const entity = EntityRecognizer.recognizeTime(text, args.refDate ? new Date(args.refDate) : null)
+            const entity = entityRecognizer.recognizeTime(text, args.refDate ? new Date(args.refDate) : null)
             if (entity) {
               score = entity.entity.length / text.length
               response = entity
             }
             break
           case promptType.choice:
-            let best = EntityRecognizer.findBestMatch(args.enumValues, text)
+            let best = entityRecognizer.findBestMatch(args.enumValues, text)
             if (!best) {
-              const n = EntityRecognizer.parseNumber(text)
+              const n = entityRecognizer.parseNumber(text)
               if (!isNaN(n) && n > 0 && n <= args.enumValues.length) {
                 best = {
                   index: n - 1,

@@ -4,7 +4,7 @@ import promptType from './prompt-type'
 import listStyle from './list-style'
 import SimplePromptRecognizer from './simple-prompt-recognizer'
 import Dialog from '../dialog'
-import EntityRecognizer from '../entity-recognizer'
+import entityRecognizer from '../entity-recognizer'
 import Message from '../../message'
 import { preferButtons } from '../../channel'
 import { randomPrompt, beginPrompt } from '../../utils'
@@ -161,7 +161,7 @@ class Prompt extends Dialog {
     args.promptType = promptType.choice
     args.prompt = prompt
     args.listStyle = args.hasOwnProperty('listStyle') ? args.listStyle : listStyle.auto
-    args.enumValues = EntityRecognizer.expandChoices(choices)
+    args.enumValues = entityRecognizer.expandChoices(choices)
     beginPrompt(session, args)
   }
 
