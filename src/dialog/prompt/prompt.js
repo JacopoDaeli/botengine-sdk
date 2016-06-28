@@ -11,7 +11,7 @@ import { randomPrompt, beginPrompt } from '../../utils'
 
 class Prompt extends Dialog {
   begin (session, _args) {
-    const args = args || {}
+    const args = _args || {}
     args.maxRetries = args.maxRetries || 1
     for (let key in args) {
       if (args.hasOwnProperty(key)) {
@@ -36,8 +36,8 @@ class Prompt extends Dialog {
       }
     }, (result) => {
       if (!result.handled) {
-        if (result.error || result.resumed === Dialog.ResumeReason.completed ||
-          result.resumed === Dialog.ResumeReason.canceled || args.maxRetries === 0) {
+        if (result.error || result.resumed === Dialog.resumeReason.completed ||
+          result.resumed === Dialog.resumeReason.canceled || args.maxRetries === 0) {
           result.promptType = args.promptType
           session.endDialog(result)
         } else {
@@ -124,60 +124,62 @@ class Prompt extends Dialog {
       session.send(msg)
     }
   }
-  configure (options) {
-    if (options) {
-      for (let key in options) {
-        if (options.hasOwnProperty(key)) {
-          Prompt.options[key] = options[key]
-        }
+}
+
+Prompt.configure = function (options) {
+  if (options) {
+    for (let key in options) {
+      if (options.hasOwnProperty(key)) {
+        Prompt.options[key] = options[key]
       }
     }
   }
-  text (session, prompt) {
-    beginPrompt(session, {
-      promptType: promptType.text,
-      prompt: prompt
-    })
-  }
+}
 
-  number (session, prompt, options) {
-    const args = options || {}
-    args.promptType = promptType.number
-    args.prompt = prompt
-    beginPrompt(session, args)
-  }
+Prompt.text = function (session, prompt) {
+  beginPrompt(session, {
+    promptType: promptType.text,
+    prompt
+  })
+}
 
-  confirm (session, prompt, options) {
-    const args = options || {}
-    args.promptType = promptType.confirm
-    args.prompt = prompt
-    args.enumValues = ['yes', 'no']
-    args.listStyle = args.hasOwnProperty('listStyle') ? args.listStyle : listStyle.auto
-    beginPrompt(session, args)
-  }
+Prompt.number = function (session, prompt, options) {
+  const args = options || {}
+  args.promptType = promptType.number
+  args.prompt = prompt
+  beginPrompt(session, args)
+}
 
-  choice (session, prompt, choices, options) {
-    const args = options || {}
-    args.promptType = promptType.choice
-    args.prompt = prompt
-    args.listStyle = args.hasOwnProperty('listStyle') ? args.listStyle : listStyle.auto
-    args.enumValues = entityRecognizer.expandChoices(choices)
-    beginPrompt(session, args)
-  }
+Prompt.confirm = function (session, prompt, options) {
+  const args = options || {}
+  args.promptType = promptType.confirm
+  args.prompt = prompt
+  args.enumValues = ['yes', 'no']
+  args.listStyle = args.hasOwnProperty('listStyle') ? args.listStyle : listStyle.auto
+  beginPrompt(session, args)
+}
 
-  time (session, prompt, options) {
-    const args = options || {}
-    args.promptType = promptType.time
-    args.prompt = prompt
-    beginPrompt(session, args)
-  }
+Prompt.choice = function (session, prompt, choices, options) {
+  const args = options || {}
+  args.promptType = promptType.choice
+  args.prompt = prompt
+  args.listStyle = args.hasOwnProperty('listStyle') ? args.listStyle : listStyle.auto
+  args.enumValues = entityRecognizer.expandChoices(choices)
+  beginPrompt(session, args)
+}
 
-  attachment (session, prompt, options) {
-    const args = options || {}
-    args.promptType = promptType.attachment
-    args.prompt = prompt
-    beginPrompt(session, args)
-  }
+Prompt.time = function (session, prompt, options) {
+  const args = options || {}
+  args.promptType = promptType.time
+  args.prompt = prompt
+  beginPrompt(session, args)
+}
+
+Prompt.attachment = function (session, prompt, options) {
+  const args = options || {}
+  args.promptType = promptType.attachment
+  args.prompt = prompt
+  beginPrompt(session, args)
 }
 
 Prompt.options = {
@@ -192,3 +194,5 @@ Prompt.defaultRetryPrompt = {
   time: 'I didn\'t recognize the time you entered. Please try again.',
   attachment: 'I didn\'t receive a file. Please try again.'
 }
+
+export default Prompt

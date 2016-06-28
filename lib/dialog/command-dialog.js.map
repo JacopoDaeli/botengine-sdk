@@ -1,0 +1,1 @@
+{"version":3,"sources":["dialog/command-dialog.js"],"names":[],"mappings":"AAAA;;;;;;;;IAEM,a;;;;kBAIS,a","file":"dialog/command-dialog.js","sourcesContent":["'use strict'\n\nclass CommandDialog {\n\n}\n\nexport default CommandDialog\n"],"sourceRoot":"/Users/jacopodaeli/Devs/wit-bot-builder/src"}

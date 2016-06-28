@@ -75,21 +75,22 @@ export default class SimplePromptRecognizer {
         args.compareConfidence(args.language, text, score, (handled) => {
           if (!handled && score > 0) {
             callback({
-              resumed: Dialog.ResumeReason.completed,
+              resumed: Dialog.resumeReason.completed,
               promptType: args.promptType,
               response: response
             })
           } else {
             callback({
-              resumed: Dialog.ResumeReason.notCompleted,
+              resumed: Dialog.resumeReason.notCompleted,
               promptType: args.promptType,
               handled: handled
             })
           }
         })
       } catch (err) {
+        console.log(err.stack)
         callback({
-          resumed: Dialog.ResumeReason.notCompleted,
+          resumed: Dialog.resumeReason.notCompleted,
           promptType: args.promptType,
           error: err instanceof Error ? err : new Error(err.toString())
         })
@@ -102,7 +103,7 @@ export default class SimplePromptRecognizer {
       onContinue()
     } else {
       callback({
-        resumed: Dialog.ResumeReason.canceled,
+        resumed: Dialog.resumeReason.canceled,
         promptType: args.promptType
       })
     }

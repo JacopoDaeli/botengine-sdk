@@ -1,10 +1,10 @@
 'use strict'
 
-const DialogCollection = require('../dialogs/DialogCollection')
-const session = require('../Session')
-const storage = require('../storage/Storage')
-const uuid = require('node-uuid')
-const readline = require('readline')
+import DialogCollection from '../dialog/dialog-collection'
+import Session from '../session'
+import MemoryStorage from '../storage/memory-storage'
+import uuid from 'node-uuid'
+import readline from 'readline'
 
 class TextBot extends DialogCollection {
   constructor (options) {
@@ -76,10 +76,10 @@ class TextBot extends DialogCollection {
   }
 
   dispatchMessage (userId, message, callback, dialogId, dialogArgs, newSessionState) {
-    if (newSessionState === void 0) {
+    if (newSessionState === undefined) {
       newSessionState = false
     }
-    const ses = new session.Session({
+    const ses = new Session({
       localizer: this.options.localizer,
       minSendDelay: this.options.minSendDelay,
       dialogs: this,
@@ -127,10 +127,10 @@ class TextBot extends DialogCollection {
 
   getData (userId, callback) {
     if (!this.options.userStore) {
-      this.options.userStore = new storage.MemoryStorage()
+      this.options.userStore = new MemoryStorage()
     }
     if (!this.options.sessionStore) {
-      this.options.sessionStore = new storage.MemoryStorage()
+      this.options.sessionStore = new MemoryStorage()
     }
     let ops = 2
     let userData = null

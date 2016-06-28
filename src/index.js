@@ -2,31 +2,37 @@
 
 import Session from './session'
 import Message from './message'
-import Dialog from './dialogs/dialog'
-import DialogAction from './dialogs/dialog-action'
-import DialogCollection from './dialogs/dialog-collection'
-import prompts from './dialogs/prompts'
-import intent from './dialogs/intent-dialog'
-import CommandDialog from './dialogs/command-dialog'
-import SimpleDialog from './dialogs/simple-dialog'
-import entityRecognizer from './dialogs/entity-recognizer'
+
+import Dialog from './dialog/dialog'
+import dialogAction from './dialog/dialog-action'
+import DialogCollection from './dialog/dialog-collection'
+
+import promptType from './dialog/prompt/prompt-type'
+import listStyle from './dialog/prompt/list-style'
+import SimplePromptRecognizer from './dialog/prompt/simple-prompt-recognizer'
+import Prompt from './dialog/prompt/prompt'
+
+// import intent from './dialog/intent-dialog'
+import CommandDialog from './dialog/command-dialog'
+import SimpleDialog from './dialog/simple-dialog'
+import entityRecognizer from './dialog/entity-recognizer'
 import MemoryStorage from './storage/memory-storage'
-import TextBot from './bots/text-bot'
+import TextBot from './bot/text-bot'
 
 exports.Session = Session
 exports.Message = Message
 exports.Dialog = Dialog
-exports.ResumeReason = Dialog.ResumeReason
-exports.DialogAction = DialogAction
+exports.ResumeReason = Dialog.resumeReason
+exports.dialogAction = dialogAction
 exports.DialogCollection = DialogCollection
 
-exports.PromptType = prompts.PromptType
-exports.ListStyle = prompts.ListStyle
-exports.Prompts = prompts.Prompts
-exports.SimplePromptRecognizer = prompts.SimplePromptRecognizer
+exports.promptType = promptType
+exports.listStyle = listStyle
+exports.Prompt = Prompt
+exports.SimplePromptRecognizer = SimplePromptRecognizer
 
-exports.IntentDialog = intent.IntentDialog
-exports.IntentGroup = intent.IntentGroup
+// exports.IntentDialog = intent.IntentDialog
+// exports.IntentGroup = intent.IntentGroup
 
 exports.CommandDialog = CommandDialog
 exports.SimpleDialog = SimpleDialog

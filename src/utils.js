@@ -35,14 +35,14 @@ export function waterfall (steps) {
     const skip = function (result) {
       result = result || {}
       if (!result.resumed) {
-        result.resumed = Dialog.ResumeReason.forward
+        result.resumed = Dialog.resumeReason.forward
       }
       waterfallAction(s, result)
     }
     if (r && r.hasOwnProperty('resumed')) {
       let step = s.dialogData[consts.Data.WaterfallStep]
       switch (r.resumed) {
-        case Dialog.ResumeReason.back:
+        case Dialog.resumeReason.back:
           step -= 1
           break
         default:
@@ -55,7 +55,7 @@ export function waterfall (steps) {
         } catch (e) {
           delete s.dialogData[consts.Data.WaterfallStep]
           s.endDialog({
-            resumed: Dialog.ResumeReason.notCompleted,
+            resumed: Dialog.resumeReason.notCompleted,
             error: e instanceof Error ? e : new Error(e.toString())
           })
         }
@@ -69,18 +69,18 @@ export function waterfall (steps) {
       } catch (e) {
         delete s.dialogData[consts.Data.WaterfallStep]
         s.endDialog({
-          resumed: Dialog.ResumeReason.notCompleted,
+          resumed: Dialog.resumeReason.notCompleted,
           error: e instanceof Error ? e : new Error(e.toString())
         })
       }
     } else {
       s.endDialog({
-        resumed: Dialog.ResumeReason.notCompleted
+        resumed: Dialog.resumeReason.notCompleted
       })
     }
   }
 }
 
 export function beginPrompt (session, args) {
-  session.beginDialog(consts.DialogId.Prompts, args)
+  session.beginDialog(consts.DialogId.Prompt, args)
 }

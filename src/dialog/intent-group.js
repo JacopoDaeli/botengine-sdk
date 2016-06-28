@@ -1,6 +1,7 @@
 'use strict'
 
-import actions from './dialog-action'
+import dialogAction from './dialog-action'
+import { waterfall } from '../utils'
 
 export default class IntentGroup {
   constructor (id) {
@@ -19,11 +20,11 @@ export default class IntentGroup {
   on (intent, dialogId, dialogArgs) {
     if (!this.handlers.hasOwnProperty(intent)) {
       if (Array.isArray(dialogId)) {
-        this.handlers[intent] = actions.waterfall(dialogId)
+        this.handlers[intent] = waterfall(dialogId)
       } else if (typeof dialogId === 'string') {
-        this.handlers[intent] = actions.DialogAction.beginDialog(dialogId, dialogArgs)
+        this.handlers[intent] = dialogAction.beginDialog(dialogId, dialogArgs)
       } else {
-        this.handlers[intent] = actions.waterfall([dialogId])
+        this.handlers[intent] = waterfall([dialogId])
       }
     } else {
       throw new Error(`Intent[${intent}] already exists.`)

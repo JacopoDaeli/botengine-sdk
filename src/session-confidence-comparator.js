@@ -5,7 +5,7 @@ import Session from './session'
 import { extractArgs } from './utils'
 
 export default class SessionConfidenceComparator {
-  SessionConfidenceComparor (session, language, utterance, score, callback) {
+  constructor (session, language, utterance, score, callback) {
     this.session = session
     this.language = language
     this.utterance = utterance

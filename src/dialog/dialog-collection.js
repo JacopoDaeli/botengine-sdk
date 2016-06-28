@@ -2,6 +2,8 @@
 
 import { EventEmitter } from 'events'
 import SimpleDialog from './simple-dialog'
+import Prompt from './prompt/prompt'
+import consts from '../constants'
 import { waterfall } from '../utils'
 
 class DialogCollection extends EventEmitter {
@@ -9,6 +11,7 @@ class DialogCollection extends EventEmitter {
     super()
     this.middleware = []
     this.dialogs = {}
+    DialogCollection.systemDialogs[consts.DialogId.Prompt] = new Prompt()
     this.add(DialogCollection.systemDialogs)
   }
 
@@ -54,3 +57,5 @@ class DialogCollection extends EventEmitter {
 }
 
 DialogCollection.systemDialogs = {}
+
+export default DialogCollection

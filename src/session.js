@@ -4,7 +4,7 @@ import { EventEmitter } from 'events'
 import _ from 'lodash'
 import sprintf from 'sprintf-js'
 import Dialog from './dialog/dialog'
-import SessionConfidenceComparor from 'session-confidence-comparator'
+import SessionConfidenceComparator from './session-confidence-comparator'
 import { extractArgs } from './utils'
 
 export default class Session extends EventEmitter {
@@ -152,7 +152,7 @@ export default class Session extends EventEmitter {
       }
     }
     if (!r.hasOwnProperty('resumed')) {
-      r.resumed = Dialog.ResumeReason.completed
+      r.resumed = Dialog.resumeReason.completed
     }
 
     r.childId = ss.callstack[ss.callstack.length - 1].id
@@ -179,7 +179,7 @@ export default class Session extends EventEmitter {
   }
 
   compareConfidence (language, utterance, score, callback) {
-    const comparer = new SessionConfidenceComparor(this, language, utterance, score, callback)
+    const comparer = new SessionConfidenceComparator(this, language, utterance, score, callback)
     comparer.next()
   }
 

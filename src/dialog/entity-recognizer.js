@@ -1,6 +1,6 @@
 'use strict'
 
-import chrono from 'node-chrono'
+import chrono from 'chrono-node'
 import * as utils from '../utils'
 
 const entityRecognizer = {

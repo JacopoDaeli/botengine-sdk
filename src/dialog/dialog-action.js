@@ -7,15 +7,14 @@ import SimpleDialog from './simple-dialog'
 import consts from '../constants'
 import { extractArgs } from '../utils'
 
-class DialogAction {
+const dialogAction = {
   send (msg) {
     const args = extractArgs(arguments, 2)
     args.splice(0, 0, msg)
     return function sendAction (s) {
       Session.prototype.send.apply(s, args)
     }
-  }
-
+  },
   beginDialog (id, args) {
     return function beginDialogAction (s, a) {
       if (a && a.hasOwnProperty('resumed')) {
@@ -37,14 +36,12 @@ class DialogAction {
         s.beginDialog(id, a)
       }
     }
-  }
-
+  },
   endDialog (result) {
     return function endDialogAction (s) {
       s.endDialog(result)
     }
-  }
-
+  },
   validatedPrompt (promptType, validator) {
     return new SimpleDialog((s, _r) => {
       let r = _r || {}
@@ -54,16 +51,16 @@ class DialogAction {
           valid = validator(r.response)
         } catch (e) {
           s.endDialog({
-            resumed: Dialog.ResumeReason.notCompleted,
+            resumed: Dialog.resumeReason.notCompleted,
             error: e instanceof Error ? e : new Error(e.toString())
           })
         }
       }
       let canceled = false
       switch (r.resumed) {
-        case Dialog.ResumeReason.canceled:
-        case Dialog.ResumeReason.forward:
-        case Dialog.ResumeReason.back:
+        case Dialog.resumeReason.canceled:
+        case Dialog.resumeReason.forward:
+        case Dialog.resumeReason.back:
           canceled = true
           break
       }
@@ -77,20 +74,20 @@ class DialogAction {
         }
         const a = _.clone(s.dialogData)
         a.maxRetries = 0
-        s.beginDialog(consts.DialogId.Prompts, a)
+        s.beginDialog(consts.DialogId.Prompt, a)
       } else if (s.dialogData.maxRetries > 0) {
         s.dialogData.maxRetries--
         const a = _.clone(s.dialogData)
         a.maxRetries = 0
         a.prompt = s.dialogData.retryPrompt || `I didn't understand. ${s.dialogData.prompt}`
-        s.beginDialog(consts.DialogId.Prompts, a)
+        s.beginDialog(consts.DialogId.Prompt, a)
       } else {
         s.endDialog({
-          resumed: Dialog.ResumeReason.notCompleted
+          resumed: Dialog.resumeReason.notCompleted
         })
       }
     })
   }
 }
 
-export default DialogAction
+export default dialogAction
