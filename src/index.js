@@ -12,7 +12,8 @@ import listStyle from './dialog/prompt/list-style'
 import SimplePromptRecognizer from './dialog/prompt/simple-prompt-recognizer'
 import Prompt from './dialog/prompt/prompt'
 
-// import intent from './dialog/intent-dialog'
+import IntentDialog from './dialog/intent-dialog'
+import IntentGroup from './dialog/intent-group'
 import CommandDialog from './dialog/command-dialog'
 import SimpleDialog from './dialog/simple-dialog'
 import entityRecognizer from './dialog/entity-recognizer'
@@ -31,8 +32,8 @@ exports.listStyle = listStyle
 exports.Prompt = Prompt
 exports.SimplePromptRecognizer = SimplePromptRecognizer
 
-// exports.IntentDialog = intent.IntentDialog
-// exports.IntentGroup = intent.IntentGroup
+exports.IntentDialog = IntentDialog
+exports.IntentGroup = IntentGroup
 
 exports.CommandDialog = CommandDialog
 exports.SimpleDialog = SimpleDialog
