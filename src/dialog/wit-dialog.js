@@ -34,7 +34,7 @@ WitDialog.recognize = function (utterance, serviceUri, bearerToken, callback) {
       if (!err) {
         const result = JSON.parse(body)
 
-        console.log(result)
+        // console.log(result)
 
         const intents = (result.entities.intent || []).map((intent) => {
           return {
@@ -43,7 +43,7 @@ WitDialog.recognize = function (utterance, serviceUri, bearerToken, callback) {
           }
         })
 
-        console.log(intents)
+        // console.log(intents)
 
         const entityKeys = Object.keys(result.entities).filter((key) => {
           return key !== 'intent'
@@ -57,8 +57,6 @@ WitDialog.recognize = function (utterance, serviceUri, bearerToken, callback) {
             resolution: false
           }
         })
-
-        console.log(body)
 
         calledCallback = true
         callback(null, intents, entities)
