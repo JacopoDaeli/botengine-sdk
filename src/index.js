@@ -6,6 +6,7 @@ import Message from './message'
 import Dialog from './dialog/dialog'
 import dialogAction from './dialog/dialog-action'
 import DialogCollection from './dialog/dialog-collection'
+import WitDialog from './dialog/wit-dialog'
 
 import promptType from './dialog/prompt/prompt-type'
 import listStyle from './dialog/prompt/list-style'
@@ -26,6 +27,7 @@ exports.Dialog = Dialog
 exports.ResumeReason = Dialog.resumeReason
 exports.dialogAction = dialogAction
 exports.DialogCollection = DialogCollection
+exports.WitDialog = WitDialog
 
 exports.promptType = promptType
 exports.listStyle = listStyle

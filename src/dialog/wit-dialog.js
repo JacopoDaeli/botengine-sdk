@@ -11,53 +11,63 @@ class WitDialog extends IntentDialog {
   }
 
   recognizeIntents (language, utterance, callback) {
-    WitDialog.recognize(utterance, this.serviceUri, callback)
+    WitDialog.recognize(utterance, this.serviceUri, this.bearerToken, callback)
   }
 }
 
-WitDialog.recognize = function (utterance, serviceUri, callback) {
+WitDialog.recognize = function (utterance, serviceUri, bearerToken, callback) {
   let uri = serviceUri.trim()
   if (uri.lastIndexOf('&q=') !== (uri.length - 3)) {
     uri += '&q='
   }
   uri += encodeURIComponent(utterance || '')
 
-  request.get(uri, (err, res, body) => {
+  const reqOpts = {
+    auth: {
+      bearer: bearerToken
+    }
+  }
+
+  request.get(uri, reqOpts, (err, res, body) => {
     let calledCallback = false
     try {
       if (!err) {
         const result = JSON.parse(body)
 
+        console.log(result)
+
         const intents = (result.entities.intent || []).map((intent) => {
           return {
             score: intent.confidence,
-            task: intent.value
+            intent: intent.value
           }
         })
 
-        const entityKeys = Object.keys(entities).filter((key) => {
+        console.log(intents)
+
+        const entityKeys = Object.keys(result.entities).filter((key) => {
           return key !== 'intent'
         })
 
         const entities = entityKeys.map((key) => {
           return {
-            score: result.entities[key][0].confidence,
-            value: result.entities[key].value,
-            name: key
+            confidence: result.entities[key][0].confidence,
+            entity: result.entities[key][0].value,
+            type: key,
+            resolution: false
           }
         })
 
-        // if (intents.length === 1 && typeof intents[0].score !== 'number') {
-        //   intents[0].score = 1.0
-        // }
+        console.log(body)
 
         calledCallback = true
-        callback(null, result.intents, result.entities)
+        callback(null, intents, entities)
       } else {
         calledCallback = true
         callback(err)
       }
     } catch (e) {
+      console.error(e.stack)
       if (!calledCallback) {
         callback(e)
       } else {
