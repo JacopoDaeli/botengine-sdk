@@ -28,6 +28,8 @@ WitDialog.recognize = function (utterance, serviceUri, bearerToken, callback) {
     }
   }
 
+  console.log(`Processing: "${utterance}".`)
+
   request.get(uri, reqOpts, (err, res, body) => {
     let calledCallback = false
     try {
