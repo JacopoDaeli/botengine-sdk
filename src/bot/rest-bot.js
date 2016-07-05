@@ -49,13 +49,7 @@ class RESTBot extends DialogCollection {
       if (authorized) {
         next()
       } else {
-        res.status(401).json({
-          error: {
-            status: 'Unauthorized',
-            statusCode: 401,
-            message: 'Invalid authentication credentials'
-          }
-        })
+        res.send(401)
       }
     }
   }
@@ -72,14 +66,9 @@ class RESTBot extends DialogCollection {
             const msg = JSON.parse(requestData)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
+            console.error(e)
             this.emit('error', new Error('Invalid message'))
-            res.status(400).json({
-              error: {
-                status: 'Bad Request',
-                statusCode: 400,
-                message: 'Invalid message'
-              }
-            })
+            res.send(400)
           }
         })
       }
@@ -105,32 +94,14 @@ class RESTBot extends DialogCollection {
     try {
       if (!message || !message.type) {
         this.emit('error', new Error('Invalid message'))
-        if (res) {
-          return res.status(400).json({
-            error: {
-              status: 'Bad Request',
-              statusCode: 400,
-              message: 'Invalid message'
-            }
-          })
-        }
-        return null
+        return res ? res.send(400) : null
       }
       if (!userId) {
         if (message.from && message.from.id) {
           userId = message.from.id
         } else {
           this.emit('error', new Error('Invalid message'))
-          if (res) {
-            return res.status(400).json({
-              error: {
-                status: 'Bad Request',
-                statusCode: 400,
-                message: 'Invalid message'
-              }
-            })
-          }
-          return null
+          return res ? res.send(400) : null
         }
       }
 
@@ -172,11 +143,17 @@ class RESTBot extends DialogCollection {
           this.saveData(userId, sessionId, data, reply, (err) => {
             if (err) return this.emit('error', err)
 
-            let endpoint = this.options.endpoint || 'https://api.botframework.com'
+            let endpoint = null
+
+            if (ses.message.to.channelId === 'emulator') {
+              endpoint = this.options.endpoint || 'http://localhost:9000'
+            } else {
+              endpoint = this.options.endpoint || 'https://api.ourapidomain.com'
+            }
 
             if (res) {
               this.emit('reply', reply)
-              res.status(200).send(reply)
+              res.send(200, reply)
               res = null
             } else if (ses.message.conversationId) {
               reply.from = ses.message.to
@@ -196,6 +173,7 @@ class RESTBot extends DialogCollection {
 
               post(this.options, endpoint, '/bot/v1.0/messages', reply, (err, response) => {
                 if (err) {
+                  console.error(err)
                   this.emit('error', err)
                 } else if (response.statusCode >= 400) {
                   console.error(response.statusMessage)
@@ -207,6 +185,7 @@ class RESTBot extends DialogCollection {
               this.emit('send', reply)
               post(this.options, endpoint, '/bot/v1.0/messages', reply, (err, response) => {
                 if (err) {
+                  console.error(err)
                   this.emit('error', err)
                 } else if (response.statusCode >= 400) {
                   console.error(response.statusMessage)
@@ -216,16 +195,9 @@ class RESTBot extends DialogCollection {
           })
         })
         ses.on('error', (err) => {
+          console.error(err, ses.message)
           this.emit('error', err, ses.message)
-          if (res) {
-            return res.status(500).json({
-              error: {
-                status: 'Internal Server Error',
-                statusCode: 500,
-                message: ses.message
-              }
-            })
-          }
+          return res ? res.send(500) : null
         })
 
         ses.on('quit', () => this.emit('quit', ses.message))
@@ -248,6 +220,7 @@ class RESTBot extends DialogCollection {
               ses.dispatch(sessionState, message)
             }
           } else {
+            console.error(err, message)
             this.emit('error', err, message)
           }
         })
@@ -264,21 +237,13 @@ class RESTBot extends DialogCollection {
             msg = this.options.goodbyeMessage
             break
         }
-        res.json(msg ? {
-          type: message.type,
-          text: msg
-        } : {})
+        res.send(msg ? { type: message.type, text: msg } : {})
       }
     } catch (e) {
+      console.error(e)
       const error = e instanceof Error ? e : new Error(e.toString())
       this.emit('error', error)
-      res.status(500).json({
-        error: {
-          status: 'Internal Server Error',
-          statusCode: 500,
-          message: error.message
-        }
-      })
+      return res ? res.send(500) : null
     }
   }
 
