@@ -21,7 +21,7 @@ import SimpleDialog from './dialog/simple-dialog'
 import entityRecognizer from './dialog/entity-recognizer'
 import MemoryStorage from './storage/memory-storage'
 import TextBot from './bot/text-bot'
-import RESTBot from './bot/rest-bot'
+import ConnectorBot from './bot/rest-bot'
 
 exports.Session = Session
 exports.RESTSession = RESTSession
@@ -46,4 +46,4 @@ exports.entityRecognizer = entityRecognizer
 exports.MemoryStorage = MemoryStorage
 
 exports.TextBot = TextBot
-exports.RESTBot = RESTBot
+exports.ConnectorBot = ConnectorBot

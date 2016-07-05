@@ -6,7 +6,7 @@ import RESTSession from '../rest-session'
 import consts from '../constants'
 import { post } from '../utils'
 
-class RESTBot extends DialogCollection {
+class ConnectorBot extends DialogCollection {
   constructor (options) {
     super()
     this.options = {
@@ -82,10 +82,10 @@ class RESTBot extends DialogCollection {
       message.from = this.options.defaultFrom
     }
     if (!message.to || !message.from) {
-      throw new Error('Invalid address passed to RESTBot.beginDialog()')
+      throw new Error('Invalid address passed to ConnectorBot.beginDialog()')
     }
     if (!this.hasDialog(dialogId)) {
-      throw new Error('Invalid dialog passed to RESTBot.beginDialog()')
+      throw new Error('Invalid dialog passed to ConnectorBot.beginDialog()')
     }
     this.dispatchMessage(message.to.id, message, { dialogId, dialogArgs })
   }
@@ -316,4 +316,4 @@ class RESTBot extends DialogCollection {
   }
 }
 
-export default RESTBot
+export default ConnectorBot

@@ -4,7 +4,7 @@ const restify = require('restify')
 const builder = require('../../')
 
 // Create bot and add dialogs
-const restBot = new builder.RESTBot({
+const restBot = new builder.ConnectorBot({
   appId: 'YourAppId',
   appSecret: 'YourAppSecret'
 })
@@ -18,5 +18,5 @@ var botServer = restify.createServer()
 botServer.post('/api/messages', restBot.verify(), restBot.listen())
 
 botServer.listen(process.env.BOT_PORT || 3978, function () {
-  console.log('SimpleHello RESTBot listening to %s', botServer.url)
+  console.log('SimpleHello ConnectorBot listening to %s', botServer.url)
 })
