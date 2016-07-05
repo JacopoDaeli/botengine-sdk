@@ -1,6 +1,7 @@
 'use strict'
 
 import sprintf from 'sprintf-js'
+import request from 'request'
 import Dialog from './dialog/dialog'
 import consts from './constants'
 
@@ -83,4 +84,26 @@ export function waterfall (steps) {
 
 export function beginPrompt (session, args) {
   session.beginDialog(consts.DialogId.Prompt, args)
+}
+
+export function post (settings, endpoint, path, body, callback) {
+  const options = {
+    method: 'POST',
+    url: `${endpoint}${path}`,
+    body: body,
+    json: true
+  }
+
+  if (settings.appId && settings.appSecret) {
+    options.auth = {
+      username: settings.appId,
+      password: settings.appSecret
+    }
+
+    options.headers = {
+      'Ocp-Apim-Subscription-Key': settings.appSecret
+    }
+  }
+
+  request(options, callback)
 }

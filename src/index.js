@@ -1,6 +1,7 @@
 'use strict'
 
 import Session from './session'
+import RESTSession from './rest-session'
 import Message from './message'
 
 import Dialog from './dialog/dialog'
@@ -20,8 +21,10 @@ import SimpleDialog from './dialog/simple-dialog'
 import entityRecognizer from './dialog/entity-recognizer'
 import MemoryStorage from './storage/memory-storage'
 import TextBot from './bot/text-bot'
+import RESTBot from './bot/rest-bot'
 
 exports.Session = Session
+exports.RESTSession = RESTSession
 exports.Message = Message
 exports.Dialog = Dialog
 exports.ResumeReason = Dialog.resumeReason
@@ -43,3 +46,4 @@ exports.entityRecognizer = entityRecognizer
 exports.MemoryStorage = MemoryStorage
 
 exports.TextBot = TextBot
+exports.RESTBot = RESTBot
