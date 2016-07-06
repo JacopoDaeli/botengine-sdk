@@ -29,7 +29,6 @@
   "dependencies": {
     "bluebird": "^3.4.1",
     "chrono-node": "^1.2.3",
-    "dotenv": "^2.0.0",
     "lodash": "^4.13.1",
     "node-uuid": "^1.4.7",
     "request": "^2.72.0",
