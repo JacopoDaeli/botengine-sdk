@@ -64,6 +64,7 @@ class ConnectorBot extends DialogCollection {
         req.on('end', () => {
           try {
             const msg = JSON.parse(requestData)
+            console.log(msg)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
             console.error(e)

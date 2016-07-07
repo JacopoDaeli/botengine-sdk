@@ -4,12 +4,12 @@ const restify = require('restify')
 const builder = require('../../')
 
 // Create bot and add dialogs
-const restBot = new builder.ConnectorBot({
+const bot = new builder.ConnectorBot({
   appId: 'YourAppId',
   appSecret: 'YourAppSecret'
 })
 
-restBot.add('/', [
+bot.add('/', [
   function (session, args, next) {
     if (!session.userData.name) {
       session.send('Hello!')
@@ -23,7 +23,7 @@ restBot.add('/', [
   }
 ])
 
-restBot.add('/profile', [
+bot.add('/profile', [
   function (session) {
     builder.Prompt.text(session, 'Hi! What is your name?')
   },
@@ -35,7 +35,7 @@ restBot.add('/profile', [
 
 // Setup Restify Bot Server
 var botServer = restify.createServer()
-botServer.post('/api/messages', restBot.verify(), restBot.listen())
+botServer.post('/api/messages', bot.verify(), bot.listen())
 
 botServer.listen(process.env.BOT_PORT || 3978, function () {
   console.log('SimpleHello ConnectorBot listening to %s', botServer.url)
