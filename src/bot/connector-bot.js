@@ -73,6 +73,7 @@ class ConnectorBot extends DialogCollection {
             console.log('Message type: ' + msg.type)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
+            console.log('listen catch ....')
             console.error(e.stack)
             this.emit('error', new Error('Invalid message'))
             res.send(400)
@@ -202,6 +203,7 @@ class ConnectorBot extends DialogCollection {
           })
         })
         ses.on('error', (err) => {
+          console.log("ses.on('error'")
           console.error(err, ses.message)
           this.emit('error', err, ses.message)
           return res ? res.send(500) : null
@@ -247,6 +249,7 @@ class ConnectorBot extends DialogCollection {
         res.send(msg ? { type: message.type, text: msg } : {})
       }
     } catch (e) {
+      console.error('seconday error catch....')
       console.error(e)
       const error = e instanceof Error ? e : new Error(e.toString())
       this.emit('error', error)
