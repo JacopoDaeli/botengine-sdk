@@ -1,7 +1,7 @@
 {
-  "name": "wit-bot-builder",
+  "name": "botengine-sdk",
   "version": "0.0.1",
-  "description": "A wit.ai API-based bot builder framework written in node.js.",
+  "description": "An SDK to build bots in node.js.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JacopoDaeli/wit-bot-builder.git"
+    "url": "git+https://github.com/JacopoDaeli/botengine-sdk.git"
   },
   "keywords": [
     "wit",
@@ -23,9 +23,9 @@
   "author": "Jacopo Daeli <jacopo.daeli@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JacopoDaeli/wit-bot-builder/issues"
+    "url": "https://github.com/JacopoDaeli/botengine-sdk/issues"
   },
-  "homepage": "https://github.com/JacopoDaeli/wit-bot-builder#readme",
+  "homepage": "https://github.com/JacopoDaeli/botengine-sdk#readme",
   "dependencies": {
     "bluebird": "^3.4.1",
     "chrono-node": "^1.2.3",
