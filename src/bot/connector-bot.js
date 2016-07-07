@@ -27,7 +27,6 @@ class ConnectorBot extends DialogCollection {
         }
       }
     }
-    console.log(this.options)
   }
 
   verify (options) {
