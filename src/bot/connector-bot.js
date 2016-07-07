@@ -10,23 +10,24 @@ class ConnectorBot extends DialogCollection {
   constructor (options) {
     super()
     this.options = {
-      endpoint: process.env.ENDPOINT,
-      appId: process.env.APP_ID || '',
-      appSecret: process.env.APP_SECRET || '',
+      endpoint: process.env.BOTENGINE_CONNECTOR_ENDPOINT || '',
+      appId: process.env.BOTENGINE_APP_ID || '',
+      appSecret: process.env.BOTENGINE_APP_SECRET || '',
       defaultDialogId: '/',
       minSendDelay: 100
     }
-    this.configure(this.options)
+    this.configure(options)
   }
 
   configure (options) {
     if (options) {
       for (let key in options) {
-        if (options.hasOwnProperty(key)) {
+        if (this.options.hasOwnProperty(key)) {
           this.options[key] = options[key]
         }
       }
     }
+    console.log(this.option)
   }
 
   verify (options) {
@@ -57,8 +58,6 @@ class ConnectorBot extends DialogCollection {
   listen (dialogId, dialogArgs) {
     return (req, res) => {
       if (req.body) {
-        console.log('req.body exists ...')
-        console.log('Message type: ' + req.body.type)
         this.dispatchMessage(null, req.body, { dialogId, dialogArgs }, res)
       } else {
         let requestData = ''
@@ -66,9 +65,6 @@ class ConnectorBot extends DialogCollection {
         req.on('end', () => {
           try {
             const msg = JSON.parse(requestData)
-            console.log(msg)
-            console.log('Message type: ' + msg.type)
-            console.log(typeof msg)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
             const error = e instanceof Error ? e : new Error(e.toString())
