@@ -57,6 +57,8 @@ class ConnectorBot extends DialogCollection {
   listen (dialogId, dialogArgs) {
     return (req, res) => {
       if (req.body) {
+        console.log('req.body exists ...')
+        console.log('Message type: ' + req.body.type)
         this.dispatchMessage(null, req.body, { dialogId, dialogArgs }, res)
       } else {
         let requestData = ''
@@ -65,6 +67,7 @@ class ConnectorBot extends DialogCollection {
           try {
             const msg = JSON.parse(requestData)
             console.log(msg)
+            console.log('Message type: ' + msg.type)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
             console.error(e)
