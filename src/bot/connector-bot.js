@@ -65,19 +65,15 @@ class ConnectorBot extends DialogCollection {
         req.on('data', (chunk) => requestData += chunk)
         req.on('end', () => {
           try {
-            console.log('******')
-            console.log(requestData)
-            console.log('******')
             const msg = JSON.parse(requestData)
             console.log(msg)
             console.log('Message type: ' + msg.type)
             console.log(typeof msg)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
-            console.log('listen catch ....')
-            console.error(e.stack)
-            this.emit('error', new Error('Invalid message'))
-            res.send(400)
+            const error = e instanceof Error ? e : new Error(e.toString())
+            if (!res) return this.emit('error', error)
+            return res.send(400)
           }
         })
       }
@@ -102,18 +98,15 @@ class ConnectorBot extends DialogCollection {
   dispatchMessage (userId, message, options, res) {
     try {
       if (!message || !message.type) {
-        console.log('if (!message || !message.type)')
-        this.emit('error', new Error('Invalid message'))
-        console.log('IT SHOULD RETURN HERE!!!')
-        return res ? res.send(400) : null
+        if (!res) return this.emit('error', new Error('Invalid message'))
+        return res.send(400)
       }
       if (!userId) {
         if (message.from && message.from.id) {
           userId = message.from.id
         } else {
-          console.log('if (message.from && message.from.id)')
-          this.emit('error', new Error('Invalid message'))
-          return res ? res.send(400) : null
+          if (!res) return this.emit('error', new Error('Invalid message'))
+          return res.send(400)
         }
       }
 
@@ -207,10 +200,9 @@ class ConnectorBot extends DialogCollection {
           })
         })
         ses.on('error', (err) => {
-          console.log("ses.on('error'")
           console.error(err, ses.message)
-          this.emit('error', err, ses.message)
-          return res ? res.send(501) : null
+          if (!res) return this.emit('error', err, ses.message)
+          return res.send(500)
         })
 
         ses.on('quit', () => this.emit('quit', ses.message))
@@ -253,11 +245,9 @@ class ConnectorBot extends DialogCollection {
         res.send(msg ? { type: message.type, text: msg } : {})
       }
     } catch (e) {
-      console.error('seconday error catch....')
-      console.error(e.stack)
       const error = e instanceof Error ? e : new Error(e.toString())
-      this.emit('error', error)
-      return res ? res.send(500) : null
+      if (!res) return this.emit('error', error)
+      return res.send(500)
     }
   }
 
