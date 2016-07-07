@@ -71,6 +71,7 @@ class ConnectorBot extends DialogCollection {
             const msg = JSON.parse(requestData)
             console.log(msg)
             console.log('Message type: ' + msg.type)
+            console.log(typeof msg)
             this.dispatchMessage(null, msg, { dialogId, dialogArgs }, res)
           } catch (e) {
             console.log('listen catch ....')
@@ -101,6 +102,7 @@ class ConnectorBot extends DialogCollection {
   dispatchMessage (userId, message, options, res) {
     try {
       if (!message || !message.type) {
+        console.log('if (!message || !message.type)')
         this.emit('error', new Error('Invalid message'))
         return res ? res.send(400) : null
       }
@@ -108,6 +110,7 @@ class ConnectorBot extends DialogCollection {
         if (message.from && message.from.id) {
           userId = message.from.id
         } else {
+          console.log('if (message.from && message.from.id)')
           this.emit('error', new Error('Invalid message'))
           return res ? res.send(400) : null
         }
@@ -250,7 +253,7 @@ class ConnectorBot extends DialogCollection {
       }
     } catch (e) {
       console.error('seconday error catch....')
-      console.error(e)
+      console.error(e.stack)
       const error = e instanceof Error ? e : new Error(e.toString())
       this.emit('error', error)
       return res ? res.send(500) : null
