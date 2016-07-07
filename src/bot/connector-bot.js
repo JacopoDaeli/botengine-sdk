@@ -104,6 +104,7 @@ class ConnectorBot extends DialogCollection {
       if (!message || !message.type) {
         console.log('if (!message || !message.type)')
         this.emit('error', new Error('Invalid message'))
+        console.log('IT SHOULD RETURN HERE!!!')
         return res ? res.send(400) : null
       }
       if (!userId) {
@@ -209,7 +210,7 @@ class ConnectorBot extends DialogCollection {
           console.log("ses.on('error'")
           console.error(err, ses.message)
           this.emit('error', err, ses.message)
-          return res ? res.send(500) : null
+          return res ? res.send(501) : null
         })
 
         ses.on('quit', () => this.emit('quit', ses.message))
