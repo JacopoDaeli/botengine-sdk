@@ -4,6 +4,10 @@ import chrono from 'chrono-node'
 import * as utils from '../utils'
 
 const entityRecognizer = {
+  dateExp: /^\d{4}-\d{2}-\d{2}/i,
+  yesExp: /^(y|yes|yep|sure|ok|true)/i,
+  noExp: /^(n|no|nope|not|false)/i,
+  numberExp: /[+-]?(?:\d+\.?\d*|\d*\.?\d+)/,
   findEntity (entities, type) {
     for (let i = 0; i < entities.length; i++) {
       if (entities[i].type === type) {
